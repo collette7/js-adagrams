@@ -37,6 +37,7 @@ export const usesAvailableLetters = (input, lettersInHand) => {
   return true;
 };
 
+
 export const scoreWord = (word) => {
   const pointValues = {
     A: 1, E: 1, I: 1, O: 1, U: 1, L: 1, N: 1, R: 1, S: 1, T: 1,
@@ -63,5 +64,23 @@ export const scoreWord = (word) => {
 };
 
 export const highestScoreFrom = (words) => {
-  // Implement this method for wave 4
+  let bestWord = words[0];
+  let bestScore = scoreWord(words[0]);
+  
+  for (const word of words) {
+    const currentScore = scoreWord(word);
+    
+    if (currentScore > bestScore) {
+      bestWord = word;
+      bestScore = currentScore;
+    } else if (currentScore === bestScore) {
+      if (word.length === 10 && bestWord.length !== 10) {
+        bestWord = word;
+      } else if (bestWord.length !== 10 && word.length < bestWord.length) {
+        bestWord = word;
+      }
+    }
+  }
+  
+  return { word: bestWord, score: bestScore };
 };
